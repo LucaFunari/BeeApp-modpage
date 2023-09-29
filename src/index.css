@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Inter", "system-ui";
+  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: "Inter var", "system-ui";
+  }
+}
+
+* {
+  scrollbar-width: 10px;
+}
+
+* ::-webkit-scrollbar {
+  width: 10px;
+  height: 20px;
+
+  transition: all 150ms;
+}
+
+* ::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: transparent;
+}
+
+* ::-webkit-scrollbar-thumb {
+  background: #fff5;
+  border-radius: 100vh;
+}
+* ::-webkit-scrollbar-track:hover {
+  background-color: #fff2;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #fff8;
+}
+
+@media (prefers-color-scheme: light) {
+  * ::-webkit-scrollbar-thumb {
+    background: #0002;
+    border-radius: 100vh;
+  }
+  * ::-webkit-scrollbar-track:hover {
+    background-color: #0002;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #0008;
+  }
+}
