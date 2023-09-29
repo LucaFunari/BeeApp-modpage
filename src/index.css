@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
 :root {
   font-family: "Inter", "system-ui";
   /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
@@ -15,14 +17,8 @@
   -webkit-text-size-adjust: 100%;
 }
 
-@supports (font-variation-settings: normal) {
-  :root {
-    font-family: "Inter var", "system-ui";
-  }
-}
-
 * {
-  scrollbar-width: 10px;
+  scrollbar-width: thin;
 }
 
 * ::-webkit-scrollbar {
@@ -33,13 +29,13 @@
 }
 
 * ::-webkit-scrollbar-track {
-  border-radius: 100vh;
+  /* border-radius: 100vh; */
   background: transparent;
 }
 
 * ::-webkit-scrollbar-thumb {
   background: #fff5;
-  border-radius: 100vh;
+  /* border-radius: 100vh; */
 }
 * ::-webkit-scrollbar-track:hover {
   background-color: #fff2;

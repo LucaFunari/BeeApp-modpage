@@ -6,22 +6,32 @@ function Header() {
 
   return (
     <div>
-      <header className=" dark:text-slate-50 bg-theme-green dark:bg-transparent">
+      <header className=" dark:text-slate-50 border-b border-black  dark:bg-transparent dark:border-b dark:border-white  dark:border-opacity-20">
         <nav className="mx-auto flex max-w-8xl items-center justify-between p-4">
           <div className="flex lg:flex-1 ">
             <span
-              className="text-3xl font-extrabold hover:opacity-50
-              select-none cursor-pointer"
+              className="text-3xl font-extrabold 
+
+              hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)]
+              hover:dark:drop-shadow-[0_0px_3px_rgba(255,255,255,0.55)]
+              transition-all
+
+
+              select-none cursor-pointer "
               onClick={() => navigate("/")}
             >
-              BeeApp
+              <span className="text-theme-green dark:text-slate-50 ">Bee</span>
+              App
             </span>
           </div>
           <div className="flex">
             <span
               className="
 select-none cursor-pointer
-hover:opacity-50
+hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)]
+hover:dark:drop-shadow-[0_0px_5px_rgba(255,255,255,0.55)]
+
+transition-all
 "
               // className=""
               onClick={() => navigate("moderation")}

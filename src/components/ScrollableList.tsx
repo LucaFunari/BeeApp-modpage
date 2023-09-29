@@ -14,37 +14,34 @@ function ScrollableList() {
   }, []);
 
   return (
-    <div className="bg-slate-950 dark:bg-slate-50 dark:bg-opacity-10 bg-opacity-10 rounded-xl w-96 block   overflow-y-auto  relative">
-      {isLoading && (
-        <>
-          <div className="absolute top-1/2 left-1/2 animate-pulse text-2xl text-slate-400 -translate-x-1/2 -translate-y-1/2">
-            Caricamento
-          </div>
+    <div className="flex flex-col rounded-tl-xl w-60 lg:w-96 border border-slate-950 border-opacity-60 dark:border-slate-50 dark:border-opacity-40">
+      <div className="px-3 py-2 font-light ">Osservazioni</div>
+      <div className="block max-h-full overflow-y-auto  relative">
+        {isLoading && (
+          <>
+            <div className="absolute top-1/2 left-1/2 animate-pulse text-2xl text-slate-400 -translate-x-1/2 -translate-y-1/2">
+              Caricamento
+            </div>
 
-          <div className="blur-sm opacity-40">
-            <ListSkeleton />
-            <ListSkeleton />
-            <ListSkeleton />
-            <ListSkeleton />
-            <ListSkeleton />
-            <ListSkeleton />
-            <ListSkeleton />
+            <div className="blur-sm opacity-40">
+              <ListSkeleton />
+              <ListSkeleton />
+              <ListSkeleton />
+              <ListSkeleton />
+              <ListSkeleton />
+              <ListSkeleton />
+              <ListSkeleton />
+            </div>
+          </>
+        )}
+        {entriesList && (
+          <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5">
+            {entriesList.map((entry: Entry) => (
+              <ScrollableListElement entry={entry} key={entry.id} />
+            ))}
           </div>
-        </>
-      )}
-      {entriesList && (
-        <div>
-          <p className="sticky top-0 p-2  bg-gray-100 dark:bg-slate-950 text-sm font-light  flex justify-center gap-1 z-50">
-            <span className="font-semibold">{entriesList.length}</span>{" "}
-            Osservazion
-            {entriesList.length === 1 ? "e" : "i"} in attesa di approvazione
-          </p>
-
-          {entriesList.map((entry: Entry) => (
-            <ScrollableListElement entry={entry} key={entry.id} />
-          ))}
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

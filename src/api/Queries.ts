@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Entry } from "../../Types";
+// import { Entry } from "../../Types";
 
 const TEMP_URL =
   "https://raw.githubusercontent.com/LucaFunari/observation/main/observation.json";
 
-const BASE_URL = "https://lrjcxi6wf3.execute-api.eu-west-1.amazonaws.com/dev/";
+// const BASE_URL = "https://lrjcxi6wf3.execute-api.eu-west-1.amazonaws.com/dev/";
 
 // qxrgcclbr1
 

@@ -5,11 +5,9 @@ import ModerationPage from "./components/ModerationPage";
 import Details from "./components/Details";
 import Homepage from "./components/Homepage";
 import Login from "./components/Login";
-import { useState } from "react";
 
+const logged = true;
 function App() {
-  const [logged, setLogged] = useState<boolean>(true);
-
   return (
     <div
       className=" dark:text-slate-50 h-screen max-h-500
