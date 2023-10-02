@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollableListElement from "./ScrollableListElement";
 import { useEntries } from "../api/Queries";
@@ -6,12 +6,16 @@ import { Entry } from "../../Types";
 import ListSkeleton from "./GuiElements/ListSkeleton";
 
 function ScrollableList() {
-  const { data: entriesList, isLoading } = useEntries();
-
   const navigate = useNavigate();
+
+  const errorFN = () => {
+    navigate("../login");
+  };
+  const { data: entriesList, isLoading } = useEntries(errorFN);
+
   useLayoutEffect(() => {
     if (entriesList) navigate(entriesList[0].id.toString());
-  }, []);
+  }, [entriesList, navigate]);
 
   return (
     <div className="flex flex-col rounded-tl-xl w-60 lg:w-96 border border-slate-950 border-opacity-60 dark:border-slate-50 dark:border-opacity-40">

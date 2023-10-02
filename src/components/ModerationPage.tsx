@@ -1,16 +1,7 @@
-import { useLayoutEffect } from "react";
 import ScrollableList from "./ScrollableList";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-function ModerationPage({ logged }: { logged: boolean }) {
-  const navigate = useNavigate();
-
-  useLayoutEffect(() => {
-    if (logged === false) {
-      navigate("../login");
-    }
-  }, []);
-
+function ModerationPage() {
   return (
     <div className="p-6 br-20 rounded-xl flex gap-4 flex-1 overflow-hidden">
       <ScrollableList />

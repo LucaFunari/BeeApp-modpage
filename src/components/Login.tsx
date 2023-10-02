@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useEntries } from "../api/Queries";
 
 function Login() {
   const navigate = useNavigate();
 
   const [key, setKey] = useState<string>();
+
+  const { isError } = useEntries(() => {
+    return;
+  });
 
   return (
     <div className=" h-full p-6 flex items-center justify-center  ">
@@ -31,9 +37,18 @@ function Login() {
             type="password"
             placeholder="APIKey"
             value={key}
-            onChange={(e) => setKey(e.target.value)}
+            onChange={(e) => {
+              setKey(e.target.value);
+
+              if (e) {
+                localStorage.setItem("ApiKey", e.target.value);
+              }
+            }}
           />
         </label>
+        {isError && Cookies.get("ApiKey") && (
+          <pre className="text-red-800">APIKey errata</pre>
+        )}
         <button
           className="border
           border-slate-950
@@ -44,7 +59,10 @@ function Login() {
             active:drop-shadow-[0_0px_10px_rgba(52,211,153,0.2)]
             "
           onClick={() => {
-            if (key) localStorage.setItem("apiKey", key);
+            if (key) {
+              Cookies.set("ApiKey", key, { expires: 1 });
+              navigate("../moderation");
+            }
           }}
         >
           Log in

@@ -5,3 +5,7 @@ export type Entry = {
   text: string | undefined;
   image: string | undefined;
 };
+
+export type ApiKeyCookie = {
+  key: string | undefined;
+};
