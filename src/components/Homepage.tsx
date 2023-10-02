@@ -2,10 +2,10 @@ import React from "react";
 
 function Homepage() {
   return (
-    <div className="p-6 h-full">
-      <div className="p-6 h-full  ">
+    <div className=" flex justify-center ">
+      <div className="p-6 h-full w-9/12 ">
         <h1 className="text-3xl font-semibold  w-fit">Homepage</h1>
-        <div className="break-words w-1/4 font-light">
+        <div className="break-words mt-6 font-light">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
           tristique mi. Vivamus interdum malesuada massa, lacinia semper quam
           blandit non. Nullam mollis massa id iaculis rhoncus. Maecenas dui leo,
@@ -21,10 +21,10 @@ function Homepage() {
           ultrices urna posuere.
         </div>
 
-        <h1 className="text-3xl font-semibold  w-fit mt-6">
+        <h1 className="text-3xl font-semibold  w-fit mt-6 ">
           Maecenas euismod feugiat sollicitudin
         </h1>
-        <div className="break-words w-1/4 font-light ">
+        <div className="break-words font-light ">
           Maecenas euismod feugiat sollicitudin. Sed justo diam, accumsan in leo
           quis, mollis lacinia turpis. Nullam facilisis pulvinar tincidunt.
           Proin sollicitudin in urna ac viverra. Sed dignissim, dui at ultrices
@@ -37,7 +37,7 @@ function Homepage() {
         <h1 className="mt-6 text-3xl font-semibold">
           Phasellus vel odio lectus
         </h1>
-        <div className="break-words w-1/4 font-light">
+        <div className="break-words mt-6 font-light">
           Phasellus vel odio lectus. Suspendisse non massa odio. Morbi finibus
           mattis tempus. Vestibulum non arcu porttitor, porta mi ac, venenatis
           est. Nunc mi enim, tempus in scelerisque eget, rhoncus vulputate arcu.

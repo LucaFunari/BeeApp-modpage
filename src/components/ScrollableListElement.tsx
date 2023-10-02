@@ -20,7 +20,7 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
         justify-center
       hover:bg-slate-950 
       hover:dark:bg-slate-50
-      hover:dark:bg-opacity-10
+        hover:dark:bg-opacity-10
         hover:bg-opacity-10 
         transition    
         px-5
@@ -31,8 +31,6 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
         text-sm
         sm:text-lg
 
-        border-b
-        border-slate-950
 
 
         "

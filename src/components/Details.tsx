@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Entry } from "../../Types";
-import { useEntries } from "../api/Queries";
+import { useObservationsList } from "../api/Queries";
 import DetailsLoading from "./GuiElements/DetailsLoading";
 
 function Details() {
   const { entryID } = useParams();
 
-  const { data: entriesList, isLoading } = useEntries();
+  const { data: entriesList, isLoading } = useObservationsList(() => {
+    return;
+  });
 
   const [currentEntry, setCurrentEntry] = useState<Entry>();
 
   useEffect(() => {
-    console.log("CFRIBIO");
-    if (entriesList) {
+    if (entriesList && entriesList.data) {
       setCurrentEntry(
-        entriesList.find((one: Entry) => one.id.toString() === entryID)
+        entriesList.data.find((one: Entry) => one.id.toString() === entryID)
       );
     }
   }, [entriesList, setCurrentEntry, entryID]);

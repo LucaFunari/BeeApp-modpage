@@ -1,20 +1,13 @@
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
-// import { Entry } from "../../Types";
 import Cookies from "js-cookie";
 
 const BASE_URL = "https://lrjcxi6wf3.execute-api.eu-west-1.amazonaws.com/dev/";
-
 // qxrgcclbr1
-
-//
-//
+// const TEMP_URL =  "https://raw.githubusercontent.com/LucaFunari/observation/main/observation.json";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    "x-api-key": localStorage.getItem("ApiKey"),
-  },
 });
 
 axiosInstance.interceptors.request.use(async (config) => {
@@ -28,48 +21,22 @@ axiosInstance.interceptors.request.use(async (config) => {
   return config;
 });
 
-// axiosInstance.interceptors.request.use(async (config) => {
-//   if (!token) {
-//     const { data } = await axios.post(
-//       TOKEN_ENDPOINT,
-
-//       {
-//         grant_type: "client_credentials",
-//       },
-//       {
-//         headers: {
-//           "Content-Type": "application/x-www-form-urlencoded",
-//         },
-
-//         auth: {
-//           username: oAuth.ClientID,
-//           password: oAuth.ClientSecret,
-//         },
-//       }
-//     );
-
-//     token = data.access_token;
-//   }
-//   config.headers.Authorization = `Bearer ${token}`;
-//   return config;
-// });
-
-export const useEntries = (errorFN: () => void) => {
-  return useQuery(["useEntries"], () => fetchEntries(), {
+export const useObservationsList = (errorFN: () => void) => {
+  return useQuery(["useEntries"], () => fetchObservations(), {
     retry: 0,
     onError: (e) => {
       if (e) {
+        console.log(e);
         errorFN();
       }
     },
   });
 };
 
-const fetchEntries = async () => {
-  const axiosResp = await axiosInstance.get("list", {}).then((res) => {
-    return res.data;
-  });
+const fetchObservations = async () => {
+  const axiosResp = await axiosInstance.get("list", {});
 
+  console.log(axiosResp);
   return axiosResp;
 };
 

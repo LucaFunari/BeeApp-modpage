@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useEntries } from "../api/Queries";
+import { useObservationsList } from "../api/Queries";
 
 function Login() {
   const navigate = useNavigate();
 
   const [key, setKey] = useState<string>();
 
-  const { isError } = useEntries(() => {
+  const { isError } = useObservationsList(() => {
     return;
   });
 
@@ -30,9 +30,10 @@ function Login() {
           <input
             className="bg-transparent border 
             border-gray-400 px-2 py-0.5 
-            rounded-full focus:bg-slate-50 
+            rounded focus:bg-slate-50 
             focus:bg-opacity-10 placeholder:text-sm 
             focus:outline-none focus:border-emerald-500
+            text-emerald-500
             "
             type="password"
             placeholder="APIKey"
@@ -52,6 +53,7 @@ function Login() {
         <button
           className="border
           border-slate-950
+          border-solid
           dark:border-slate-50 rounded-full py-1
           hover:bg-emerald-600
           hover:border-emerald-600
