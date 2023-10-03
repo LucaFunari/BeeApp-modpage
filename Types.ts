@@ -1,8 +1,8 @@
 export type Entry = {
-  id: string;
-  category: 0 | 1 | 2;
+  uid: string;
+  type: string;
   tags: string[];
-  text: string | undefined;
+  description: string | undefined;
   image: string | undefined;
 };
 

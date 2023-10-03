@@ -9,11 +9,10 @@ import Login from "./components/Login";
 function App() {
   return (
     <div
-      className=" dark:text-slate-50 
-    bg-stone-100
-      dark:bg-background-gray
-      flex flex-col
-      h-screen 
+      className="
+      dark:text-slate-50 bg-stone-100
+      dark:bg-background-gray flex flex-col
+      h-screen portrait:h-full
       "
     >
       <Header />
