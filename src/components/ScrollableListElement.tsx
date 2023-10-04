@@ -34,9 +34,9 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
 
 
         "
-        onClick={() => navigate(entry.id.toString())}
+        onClick={() => navigate(entry.uid)}
       >
-        <span>Observation {entry.id}</span>
+        <span>Observation {entry.uid}</span>
         <span
           className="line-clamp-2
           text-sm
@@ -44,7 +44,7 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
           z-30
           "
         >
-          {entry.text}
+          {entry.description}
         </span>
       </div>
     </div>

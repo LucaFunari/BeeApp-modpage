@@ -1,8 +1,13 @@
 export type Entry = {
-  id: string;
-  category: 0 | 1 | 2;
+  uid: string;
+  timestamp: string;
+
+  type: string;
+  subtype: string;
+  family: Array<string | undefined> | undefined;
+
   tags: string[];
-  text: string | undefined;
+  description: string | undefined;
   image: string | undefined;
 };
 

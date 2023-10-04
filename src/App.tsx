@@ -5,6 +5,7 @@ import ModerationPage from "./components/ModerationPage";
 import Details from "./components/Details";
 import Homepage from "./components/Homepage";
 import Login from "./components/Login";
+import Test from "./components/Test";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
 
       <Routes>
         <Route index element={<Homepage />} />
+
+        <Route path="test" element={<Test />} />
 
         <Route path="login" element={<Login />} />
         <Route path="moderation" element={<ModerationPage />}>

@@ -52,7 +52,7 @@ function ScrollableList() {
           <>
             <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5 divide-y divide-solid">
               {entriesList.data.map((entry: Entry) => (
-                <ScrollableListElement entry={entry} key={entry.id} />
+                <ScrollableListElement entry={entry} key={entry.uid} />
               ))}
             </div>
           </>

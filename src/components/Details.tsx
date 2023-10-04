@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Entry } from "../../Types";
-import { useObservationsList } from "../api/Queries";
+import { DownloadImage, useObservationsList } from "../api/Queries";
 import DetailsLoading from "./GuiElements/DetailsLoading";
 
 function Details() {
@@ -12,14 +12,21 @@ function Details() {
   });
 
   const [currentEntry, setCurrentEntry] = useState<Entry>();
+  const [imagePath, setImagePath] = useState<string>("");
+
+  const { data: imageData } = DownloadImage(imagePath);
 
   useEffect(() => {
     if (entriesList && entriesList.data) {
       setCurrentEntry(
-        entriesList.data.find((one: Entry) => one.id.toString() === entryID)
+        entriesList.data.find((one: Entry) => one.uid === entryID)
       );
     }
   }, [entriesList, setCurrentEntry, entryID]);
+
+  useEffect(() => {
+    setImagePath(currentEntry?.image as string);
+  }, [entryID]);
 
   return (
     <div className="relative flex flex-col gap-5 items-center justify-center w-full">
@@ -29,7 +36,7 @@ function Details() {
           <div className="font-semibold">
             Osservazione{" "}
             <span className="bg-black px-2 py-2 text-xl rounded-xl text-slate-50 ">
-              {currentEntry.id}
+              {currentEntry.uid}
             </span>
           </div>
           <div
@@ -58,13 +65,7 @@ function Details() {
           </div>
           <div>
             Categoria:{" "}
-            <span className="underline">
-              {currentEntry.category === 0
-                ? "BeeHotel"
-                : currentEntry.category === 1
-                ? "Fioriture"
-                : "Impollinatori"}
-            </span>
+            <span className="font-semibold">{currentEntry.type}</span>
           </div>
           <textarea
             rows={4}
@@ -74,7 +75,7 @@ function Details() {
             dark:bg-white-50 dark:bg-opacity-10 dark:text-white
             focus:outline-none focus:border-blue-500"
             readOnly
-            value={currentEntry.text}
+            value={currentEntry.description}
           ></textarea>
 
           <fieldset className="flex gap-20 p-3 relative">
