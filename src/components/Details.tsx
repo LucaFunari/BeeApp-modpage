@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Entry } from "../../Types";
-import { DownloadImage, useObservationsList } from "../api/Queries";
+import { UseEntryConfirm, useObservationsList } from "../api/Queries";
 import DetailsLoading from "./GuiElements/DetailsLoading";
+import { useQueryClient } from "@tanstack/react-query";
 
 function Details() {
   const { entryID } = useParams();
+
+  const queryClient = useQueryClient();
 
   const { data: entriesList, isLoading } = useObservationsList(() => {
     return;
   });
 
   const [currentEntry, setCurrentEntry] = useState<Entry>();
-  const [imagePath, setImagePath] = useState<string>("");
-
-  const { data: imageData } = DownloadImage(imagePath);
+  const { mutateAsync } = UseEntryConfirm();
 
   useEffect(() => {
     if (entriesList && entriesList.data) {
@@ -24,10 +25,6 @@ function Details() {
     }
   }, [entriesList, setCurrentEntry, entryID]);
 
-  useEffect(() => {
-    setImagePath(currentEntry?.image as string);
-  }, [entryID]);
-
   return (
     <div className="relative flex flex-col gap-5 items-center justify-center w-full">
       {isLoading && <DetailsLoading />}
@@ -35,7 +32,7 @@ function Details() {
         <>
           <div className="font-semibold">
             Osservazione{" "}
-            <span className="bg-black px-2 py-2 text-xl rounded-xl text-slate-50 ">
+            <span className="bg-black px-2 py-2 text-xl rounded-md text-slate-50 ">
               {currentEntry.uid}
             </span>
           </div>
@@ -45,14 +42,16 @@ function Details() {
                       bg-opacity-5 dark:bg-opacity-5 
                     dark:bg-slate-50"
           >
-            <img
-              src={currentEntry.image}
-              loading="lazy"
-              alt="Entry Image"
-              className="rounded-md max-h-96 object-cover"
-            ></img>
+            <a>
+              <img
+                // src="https://picsum.photos/1080/1920"
+                src={currentEntry.image}
+                loading="lazy"
+                alt={currentEntry.image}
+                className="max-h-96 object-cover"
+              ></img>
+            </a>
           </div>
-          <pre className="select-all ">{currentEntry.image}</pre>
           <div className="flex flex-row, gap-3">
             {currentEntry.tags.map((tag) => (
               <p
@@ -80,25 +79,61 @@ function Details() {
 
           <fieldset className="flex gap-20 p-3 relative">
             <button
+              onClick={() => {
+                queryClient.setQueriesData(["useEntries"], (previousEntries) =>
+                  previousEntries
+                    ? {
+                        ...previousEntries,
+                        data: previousEntries.data.map((ent: any) =>
+                          ent.uid === currentEntry.uid
+                            ? { ...ent, approving: true }
+                            : ent
+                        ),
+                      }
+                    : undefined
+                );
+              }}
               className="
             transition-all text-white-500  font-semibold  py-2 px-4
             border border-slate-950 rounded dark:border-slate-50
         
           hover:border-green-500 hover:bg-green-500 hover:text-white 
 
-          active:bg-green-400 active:dark:bg-green-300 active:drop-shadow-[0_0px_10px_rgba(134,239,172,0.2)]"
+          active:bg-green-400 active:dark:bg-green-300 "
             >
               Approva
             </button>
 
             <button
+              onClick={
+                () =>
+                  queryClient.setQueriesData(
+                    ["useEntries"],
+                    (previousEntries) =>
+                      previousEntries
+                        ? {
+                            ...previousEntries,
+                            data: previousEntries.data.map((ent: any) =>
+                              ent.uid === currentEntry.uid
+                                ? { ...ent, approving: false }
+                                : ent
+                            ),
+                          }
+                        : undefined
+                  )
+
+                // mutateAsync({
+                //   entryID: currentEntry.uid,
+                //   confirm: false,
+                // })
+              }
               className="
             transition-all text-white-500  font-semibold  py-2 
             px-4 border border-slate-950 dark:border-white
 
           hover:border-red-500 hover:bg-red-500 hover:text-white rounded
 
-            active:bg-red-400 active:dark:bg-red-300 active:drop-shadow-[0_0px_10px_rgba(252,165,165,0.2)]"
+            active:bg-red-400 active:dark:bg-red-300 "
             >
               Rifiuta
             </button>

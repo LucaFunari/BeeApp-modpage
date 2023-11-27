@@ -1,11 +1,12 @@
 import "./App.css";
 import Header from "./components/Header";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import ModerationPage from "./components/ModerationPage";
 import Details from "./components/Details";
 import Homepage from "./components/Homepage";
 import Login from "./components/Login";
 import Test from "./components/Test";
+import React from "react";
 
 function App() {
   return (
@@ -20,14 +21,14 @@ function App() {
       <Header />
 
       <Routes>
+        <Route path="moderation" element={<ModerationPage />}>
+          <Route path=":entryID" element={<Details />}></Route>
+        </Route>
         <Route index element={<Homepage />} />
 
         <Route path="test" element={<Test />} />
 
         <Route path="login" element={<Login />} />
-        <Route path="moderation" element={<ModerationPage />}>
-          <Route path=":entryID" element={<Details />}></Route>
-        </Route>
       </Routes>
     </div>
   );

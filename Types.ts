@@ -9,6 +9,7 @@ export type Entry = {
   tags: string[];
   description: string | undefined;
   image: string | undefined;
+  approving: boolean | undefined;
 };
 
 export type ApiKeyCookie = {

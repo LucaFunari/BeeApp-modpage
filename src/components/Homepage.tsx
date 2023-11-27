@@ -1,10 +1,12 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
 function Homepage() {
   return (
     <div className=" flex justify-center ">
       <div className="p-6 h-full w-9/12 ">
-        <h1 className="text-3xl font-semibold  w-fit">Homepage</h1>
+        <Navigate to={"moderation"} />
+        {/* <h1 className="text-3xl font-semibold  w-fit">Homepage</h1>
         <div className="break-words mt-6 font-light">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
           tristique mi. Vivamus interdum malesuada massa, lacinia semper quam
@@ -46,7 +48,7 @@ function Homepage() {
           vestibulum. Maecenas fermentum nec mi sit amet mattis. Maecenas mollis
           eget augue non condimentum. Vestibulum mattis massa quis aliquam
           feugiat. Integer ut dignissim orci. Nunc laoreet efficitur congue.
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 
 const BASE_URL = "https://lrjcxi6wf3.execute-api.eu-west-1.amazonaws.com/dev/";
 // qxrgcclbr1
@@ -15,7 +14,9 @@ const axiosInstance = axios.create({
 const axiosImageInstance = axios.create();
 
 axiosInstance.interceptors.request.use(async (config) => {
-  const ApiKeyCookie = Cookies.get("ApiKey");
+  // const ApiKeyCookie = Cookies.get("ApiKey");
+
+  const ApiKeyCookie = sessionStorage.getItem("ApiKey");
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
@@ -54,7 +55,7 @@ const fetchObservations = async () => {
 };
 
 export const UseEntryConfirm = () => {
-  useMutation((props: { entryID: string; confirm: boolean }) =>
+  return useMutation((props: { entryID: string; confirm: boolean }) =>
     confirmEntry(props.entryID, props.confirm)
   );
 };

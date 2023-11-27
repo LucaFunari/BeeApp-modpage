@@ -10,28 +10,12 @@ function Header() {
           <div className="flex lg:flex-1 ">
             <span
               className="text-2xl font-black 
-              hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)]
-              hover:dark:drop-shadow-[0_0px_3px_rgba(255,255,255,0.55)]
               transition-all
-              select-none cursor-pointer "
-              onClick={() => navigate("/")}
+              select-none "
+              // onClick={() => navigate("/")}
             >
               <span className="text-theme-green dark:text-slate-50 ">Bee</span>
               App
-            </span>
-          </div>
-
-          <div className="flex">
-            <span
-              className="
-            select-none cursor-pointer
-            hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)]
-            hover:dark:drop-shadow-[0_0px_5px_rgba(255,255,255,0.55)]
-            transition-all
-            "
-              onClick={() => navigate("moderation")}
-            >
-              Moderation
             </span>
           </div>
         </nav>

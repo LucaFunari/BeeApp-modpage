@@ -30,7 +30,7 @@ function Login() {
           <input
             className="bg-transparent border 
             border-gray-400 px-2 py-0.5 
-            rounded focus:bg-slate-50 
+             focus:bg-slate-50 
             focus:bg-opacity-10 placeholder:text-sm 
             focus:outline-none focus:border-emerald-500
             text-emerald-500
@@ -40,14 +40,10 @@ function Login() {
             value={key}
             onChange={(e) => {
               setKey(e.target.value);
-
-              if (e) {
-                localStorage.setItem("ApiKey", e.target.value);
-              }
             }}
           />
         </label>
-        {isError && Cookies.get("ApiKey") && (
+        {isError && sessionStorage.getItem("ApiKey") && (
           <pre className="text-red-800">APIKey errata</pre>
         )}
         <button
@@ -58,10 +54,12 @@ function Login() {
           hover:bg-emerald-600
           hover:border-emerald-600
             transition active:bg-emerald-400
-            active:drop-shadow-[0_0px_10px_rgba(52,211,153,0.2)]
             "
           onClick={() => {
             if (key) {
+              console.log(key);
+              // sessionStorage.set("ApiKey", key);
+              sessionStorage.setItem("ApiKey", key);
               Cookies.set("ApiKey", key, { expires: 1 });
               navigate("../moderation");
             }
