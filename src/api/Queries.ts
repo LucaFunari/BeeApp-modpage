@@ -61,17 +61,9 @@ export const UseEntryConfirm = () => {
 };
 
 const confirmEntry = async (entryID: string, confirm: boolean) => {
-  const axiosResp = await axiosInstance.post(
-    "observation/",
-    {
-      confirm: confirm,
-    },
-    {
-      params: {
-        id: entryID,
-      },
-    }
-  );
+  const axiosResp = await axiosInstance.post("observation/" + entryID, {
+    confirm: confirm,
+  });
   return axiosResp;
 };
 

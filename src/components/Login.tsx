@@ -16,12 +16,12 @@ function Login() {
     <div className=" h-full p-6 flex items-center justify-center  ">
       <div className="border border-gray-500 p-6 rounded-xl flex gap-5 flex-col w-96">
         <div>
-          <button
+          {/* <button
             onClick={() => navigate("../")}
             className="text-sm opacity-50"
           >
             Torna alla Home
-          </button>
+          </button> */}
           <h1 className="text-2xl font-semibold">Non autorizzato</h1>
         </div>
 
@@ -60,7 +60,7 @@ function Login() {
               console.log(key);
               // sessionStorage.set("ApiKey", key);
               sessionStorage.setItem("ApiKey", key);
-              Cookies.set("ApiKey", key, { expires: 1 });
+              // Cookies.set("ApiKey", key, { expires: 1 });
               navigate("../moderation");
             }
           }}

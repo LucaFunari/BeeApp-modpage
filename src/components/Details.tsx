@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Entry } from "../../Types";
 import { UseEntryConfirm, useObservationsList } from "../api/Queries";
 import DetailsLoading from "./GuiElements/DetailsLoading";
@@ -16,6 +16,8 @@ function Details() {
 
   const [currentEntry, setCurrentEntry] = useState<Entry>();
   const { mutateAsync } = UseEntryConfirm();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (entriesList && entriesList.data) {
@@ -80,6 +82,13 @@ function Details() {
           <fieldset className="flex gap-20 p-3 relative">
             <button
               onClick={() => {
+                mutateAsync(
+                  { confirm: true, entryID: currentEntry.uid },
+                  {
+                    onSuccess: () => navigate("../"),
+                  }
+                );
+
                 queryClient.setQueriesData(["useEntries"], (previousEntries) =>
                   previousEntries
                     ? {
@@ -106,7 +115,14 @@ function Details() {
 
             <button
               onClick={
-                () =>
+                () => {
+                  mutateAsync(
+                    { confirm: false, entryID: currentEntry.uid },
+                    {
+                      onSuccess: () => navigate("../"),
+                    }
+                  );
+
                   queryClient.setQueriesData(
                     ["useEntries"],
                     (previousEntries) =>
@@ -120,7 +136,8 @@ function Details() {
                             ),
                           }
                         : undefined
-                  )
+                  );
+                }
 
                 // mutateAsync({
                 //   entryID: currentEntry.uid,
