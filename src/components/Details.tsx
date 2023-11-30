@@ -4,6 +4,7 @@ import { Entry } from "../../Types";
 import { UseEntryConfirm, useObservationsList } from "../api/Queries";
 import DetailsLoading from "./GuiElements/DetailsLoading";
 import { useQueryClient } from "@tanstack/react-query";
+import DetailsImage from "./DetailsImage";
 
 function Details() {
   const { entryID } = useParams();
@@ -44,15 +45,9 @@ function Details() {
                       bg-opacity-5 dark:bg-opacity-5 
                     dark:bg-slate-50"
           >
-            <a>
-              <img
-                // src="https://picsum.photos/1080/1920"
-                src={currentEntry.image}
-                loading="lazy"
-                alt={currentEntry.image}
-                className="max-h-96 object-cover"
-              ></img>
-            </a>
+            <DetailsImage imageUrl={currentEntry.image} />
+            {/*
+             */}
           </div>
           <div className="flex flex-row, gap-3">
             {currentEntry.tags.map((tag) => (
