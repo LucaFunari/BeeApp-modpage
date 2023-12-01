@@ -13,7 +13,7 @@ function Details() {
 
   const queryClient = useQueryClient();
 
-  const { data: entriesList, isLoading } = useObservationsList(() => {
+  const { data: entriesList, isLoading, refetch } = useObservationsList(() => {
     return;
   });
 
@@ -122,6 +122,7 @@ const date = React.useMemo(() => {
                   {
                     onSuccess: () => 
                     {
+                      refetch();
 if(entriesList?.data[0]) navigate('../'+entriesList?.data[0].uid)
                     else  navigate("../")
                     }
@@ -166,6 +167,7 @@ if(entriesList?.data[0]) navigate('../'+entriesList?.data[0].uid)
                     { confirm: false, entryID: currentEntry.uid },
                     {
                       onSuccess: () => {
+                        refetch();
                         if(entriesList?.data[0]) navigate('../'+entriesList?.data[0].uid)
                     else  navigate("../")
 

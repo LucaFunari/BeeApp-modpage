@@ -10,7 +10,7 @@ function Header() {
           <div className="flex lg:flex-1 ">
             <div className="inline-flex items-center gap-5">
 
-            <img src="./icona_app_ng4p.png" className="h-12 w-12 " alt="Logo NG4P"/>
+            <img src="./icona_app_ng4p.png" className="h-12 w-12 " alt="Logo NG4P" loading="lazy"/>
             <h1 className="text-xl font-extrabold select-none opacity-50">
               Admin
             </h1>
