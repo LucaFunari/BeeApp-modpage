@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Entry } from "../../Types";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -24,6 +24,7 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
     }
   }, [entry, queryClient]);
 
+
   const timeStamp = React.useMemo(() => {
     const date = new Date(entry.timestamp);
     const now = Date.now();
@@ -43,6 +44,7 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
       transition    
       active:bg-opacity-20
       active:dark:bg-opacity-20
+      
     "
     >
       {/* <div className="absolute  w-full h-full flex justify-center items-center bg-green-500 z-50 bg-opacity-25 backdrop-blur-sm text-xl select-none">
@@ -69,21 +71,21 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
         justify-center
         px-5
         relative
-      
+        truncate
         text-xs
         sm:text-lg
-        flex-1    
+        flex-1 
         "
         onClick={() => navigate(entry.uid)}
       >
         <span className="truncate">Osservazione</span>
         <span
-          className="line-clamp-2
+          className="
           text-sm
           opacity-70
           z-30
           truncate
-         "
+             "
         >
           {entry.description}
         </span>

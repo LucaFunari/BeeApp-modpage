@@ -6,7 +6,7 @@ function Homepage() {
     <div className=" flex justify-center ">
       <div className="p-6 h-full w-9/12 ">
         <Navigate to={"moderation"} />
-        {/* <h1 className="text-3xl font-semibold  w-fit">Homepage</h1>
+        <h1 className="text-3xl font-semibold  w-fit">Homepage</h1>
         <div className="break-words mt-6 font-light">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
           tristique mi. Vivamus interdum malesuada massa, lacinia semper quam
@@ -22,7 +22,7 @@ function Homepage() {
           malesuada sem ultricies. Nam accumsan enim sit amet augue congue, nec
           ultrices urna posuere.
         </div>
-
+{/*
         <h1 className="text-3xl font-semibold  w-fit mt-6 ">
           Maecenas euismod feugiat sollicitudin
         </h1>
