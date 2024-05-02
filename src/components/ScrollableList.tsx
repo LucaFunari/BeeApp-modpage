@@ -1,37 +1,80 @@
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollableListElement from "./ScrollableListElement";
-import { useObservationsList } from "../api/Queries";
+import { useApprovedList, useObservationsList } from "../api/Queries";
 import { Entry } from "../../Types";
-import LoadingList from "./GuiElements/LoadingList";
+import ListLoading from "./ListLoading";
 
-function ScrollableList() {
+function ScrollableList(props: { showingApproved: boolean }) {
   const navigate = useNavigate();
+
+  const { showingApproved } = props;
 
   const errorFN = () => {
     navigate("../login");
   };
   const { data: entriesList, isLoading } = useObservationsList(errorFN);
+  const { data: approvedList, isLoading: approvedListIsLoading } =
+    useApprovedList();
+
+  const [oldest, setOldest] = React.useState<boolean>(true);
+
+  const loadingEntries = isLoading || approvedListIsLoading;
 
   return (
-    <div
-      className="
-        flex flex-col rounded-lg w-60
-        lg:w-96 border border-solid
-      border-slate-950 border-opacity-60
-      dark:border-slate-50 dark:border-opacity-40
-        "
-    >
-      <div className="px-3 py-2 font-light ">Osservazioni</div>
-      <div className="block max-h-full overflow-y-auto  relative">
-        {isLoading && <LoadingList />}
+    <div className="flex flex-col w-60 lg:w-96 border border-solid border-slate-950 border-opacity-60 dark:border-slate-50 dark:border-opacity-40">
+      <div className="px-3 py-2 font-light ">
+        Osservazioni {showingApproved && "approvate"}
+      </div>
 
-        {entriesList && entriesList.data && (
+      <div
+        className="px-3 py-2 text-sm select-none cursor-pointer"
+        onClick={() => setOldest(!oldest)}
+      >
+        Ordina per: <b>{oldest ? "Vecchio ↓" : "Nuovo ↑"}</b>
+      </div>
+      <div className="block max-h-full overflow-y-auto  relative">
+        {loadingEntries && <ListLoading />}
+
+        {!showingApproved ? (
           <>
-            <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5 divide-y divide-solid">
-              {entriesList.data.map((entry: Entry) => (
-                <ScrollableListElement entry={entry} key={entry.uid} />
-              ))}
-            </div>
+            {entriesList && entriesList.data && (
+              <>
+                <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5 divide-y divide-solid">
+                  {entriesList.data
+                    .sort((a: Entry, b: Entry) => {
+                      const dateA = new Date(a.timestamp);
+                      const dateB = new Date(b.timestamp);
+
+                      if (oldest) return dateA.getTime() - dateB.getTime();
+                      else return dateB.getTime() - dateA.getTime();
+                    })
+                    .map((entry: Entry) => (
+                      <ScrollableListElement entry={entry} key={entry.uid} />
+                    ))}
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {approvedList && approvedList?.data?.items && (
+              <>
+                <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5 divide-y divide-solid">
+                  {approvedList.data?.items
+                    ?.sort((a: Entry, b: Entry) => {
+                      const dateA = new Date(a.timestamp);
+                      const dateB = new Date(b.timestamp);
+
+                      if (oldest) return dateA.getTime() - dateB.getTime();
+                      else return dateB.getTime() - dateA.getTime();
+                    })
+                    .map((entry: Entry) => (
+                      <ScrollableListElement entry={entry} key={entry.uid} />
+                    ))}
+                </div>
+              </>
+            )}
           </>
         )}
         {entriesList?.status === 204 && (

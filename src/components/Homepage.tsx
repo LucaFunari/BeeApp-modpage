@@ -1,7 +1,11 @@
+import React from "react";
+import { Navigate } from "react-router-dom";
+
 function Homepage() {
   return (
     <div className=" flex justify-center ">
-      <div className="p-6 h-full w-3/5 portrait:w-full ">
+      <div className="p-6 h-full w-9/12 ">
+        <Navigate to={"moderation"} />
         <h1 className="text-3xl font-semibold  w-fit">Homepage</h1>
         <div className="break-words mt-6 font-light">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
@@ -18,7 +22,7 @@ function Homepage() {
           malesuada sem ultricies. Nam accumsan enim sit amet augue congue, nec
           ultrices urna posuere.
         </div>
-
+        {/*
         <h1 className="text-3xl font-semibold  w-fit mt-6 ">
           Maecenas euismod feugiat sollicitudin
         </h1>
@@ -36,21 +40,15 @@ function Homepage() {
           Phasellus vel odio lectus
         </h1>
         <div className="break-words mt-6 font-light">
-          Duis sit amet orci a enim vulputate imperdiet sed ac nisl. Integer
-          gravida odio eu mattis fringilla. Cras tempus enim ut metus ultrices
-          dapibus. Aliquam in mauris mi. Aenean porta dui in risus pharetra, eu
-          dictum augue placerat. Praesent lorem elit, condimentum a tellus ac,
-          fermentum sodales dui. Mauris sollicitudin ullamcorper elit. Sed
-          vestibulum quam sit amet tortor auctor consequat. Vivamus efficitur
-          convallis diam quis ullamcorper. Pellentesque varius, massa sit amet
-          posuere fermentum, dolor erat efficitur sapien, vitae auctor metus
-          ante lacinia est. Sed non maximus ante, quis ultrices augue. Nullam
-          pulvinar et nunc et luctus. Cras ut odio lacinia, mollis nisl ac,
-          ornare tellus. Ut sed urna eu massa consectetur auctor non eu magna.
-          Aliquam imperdiet, quam quis gravida feugiat, augue purus posuere
-          augue, sit amet suscipit turpis odio vel est. Morbi sit amet ante
-          nunc.
-        </div>
+          Phasellus vel odio lectus. Suspendisse non massa odio. Morbi finibus
+          mattis tempus. Vestibulum non arcu porttitor, porta mi ac, venenatis
+          est. Nunc mi enim, tempus in scelerisque eget, rhoncus vulputate arcu.
+          Praesent facilisis turpis a justo posuere, vel fringilla dui vehicula.
+          In sed ornare magna, eget rutrum nibh. Nulla interdum quis est ut
+          vestibulum. Maecenas fermentum nec mi sit amet mattis. Maecenas mollis
+          eget augue non condimentum. Vestibulum mattis massa quis aliquam
+          feugiat. Integer ut dignissim orci. Nunc laoreet efficitur congue.
+        </div> */}
       </div>
     </div>
   );

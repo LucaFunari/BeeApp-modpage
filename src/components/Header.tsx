@@ -5,36 +5,28 @@ function Header() {
 
   return (
     <div>
-      <header className="sticky left-0 dark:text-slate-50 border-b border-black  dark:bg-transparent dark:border-b dark:border-white  dark:border-opacity-20">
-        <nav className="mx-auto flex max-w-8xl items-center justify-between p-4 sticky ">
+      <header className="sticky left-0 dark:text-slate-50   dark:bg-transparent  ">
+        <nav className="mx-auto flex max-w-8xl items-center justify-between p-2 sticky ">
           <div className="flex lg:flex-1 ">
-            <span
-              className="text-2xl font-black 
-              hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)]
-              hover:dark:drop-shadow-[0_0px_3px_rgba(255,255,255,0.55)]
-              transition-all
-              select-none cursor-pointer "
-              onClick={() => navigate("/")}
-            >
-              <span className="text-theme-green dark:text-slate-50 ">Bee</span>
-              App
-            </span>
-          </div>
+            <div className="inline-flex items-center gap-5">
 
-          <div className="flex">
-            <span
-              className="
-            select-none cursor-pointer
-            hover:drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)]
-            hover:dark:drop-shadow-[0_0px_5px_rgba(255,255,255,0.55)]
-            transition-all
-            "
-              onClick={() => navigate("moderation")}
-            >
-              Moderation
-            </span>
+            <img src="./icona_app_ng4p.png" className="h-12 w-12 " alt="Logo NG4P" loading="lazy"/>
+            <h1 className="text-xl font-extrabold select-none opacity-50">
+              Admin
+            </h1>
+            </div>
           </div>
+          {process.env.NODE_ENV === "development" &&
+          <pre className="
+          opacity-10
+          select-none
+          ">
+
+          {process.env.NODE_ENV}
+          </pre>
+          }
         </nav>
+
       </header>
     </div>
   );
