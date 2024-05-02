@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Entry } from "../../Types";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -92,8 +92,8 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
           text-sm
           opacity-70
           z-30
-overflow-clip
-          "
+          overflow-hidden
+         "
         >
           {entry.description}
         </span>

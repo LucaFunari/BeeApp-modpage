@@ -14,7 +14,7 @@ function Login() {
 
   return (
     <div className=" h-full p-6 flex items-center justify-center  ">
-      <div className="border border-gray-500 p-6 rounded-xl flex gap-5 flex-col w-96">
+      <div className="border border-gray-500 p-6 flex gap-5 flex-col w-96">
         <div>
           {/* <button
             onClick={() => navigate("../")}
@@ -50,10 +50,10 @@ function Login() {
           className="border
           border-slate-950
           border-solid
-          dark:border-slate-50 rounded-full py-1
+          dark:border-slate-50 py-1
           hover:bg-emerald-600
           hover:border-emerald-600
-            transition active:bg-emerald-400
+          transition active:bg-emerald-400
             "
           onClick={() => {
             if (key) {
