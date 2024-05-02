@@ -17,23 +17,15 @@ function ScrollableList(props: { showingApproved: boolean }) {
   const { data: approvedList, isLoading: approvedListIsLoading } =
     useApprovedList();
 
-  React.useEffect(() => {
-    console.debug(showingApproved);
-
-    if (!showingApproved) {
-      console.debug(entriesList?.data[0]);
-    } else console.debug(approvedList?.data?.items[0]);
-  }, [showingApproved, entriesList, approvedList]);
-
-  const once = React.useRef(true);
-
   const [oldest, setOldest] = React.useState<boolean>(true);
 
   const loadingEntries = isLoading || approvedListIsLoading;
 
   return (
     <div className="flex flex-col w-60 lg:w-96 border border-solid border-slate-950 border-opacity-60 dark:border-slate-50 dark:border-opacity-40">
-      <div className="px-3 py-2 font-light ">Osservazioni</div>
+      <div className="px-3 py-2 font-light ">
+        Osservazioni {showingApproved && "approvate"}
+      </div>
 
       <div
         className="px-3 py-2 text-sm select-none cursor-pointer"
@@ -50,7 +42,7 @@ function ScrollableList(props: { showingApproved: boolean }) {
               <>
                 <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5 divide-y divide-solid">
                   {entriesList.data
-                    .sort((a, b) => {
+                    .sort((a: Entry, b: Entry) => {
                       const dateA = new Date(a.timestamp);
                       const dateB = new Date(b.timestamp);
 
@@ -69,9 +61,17 @@ function ScrollableList(props: { showingApproved: boolean }) {
             {approvedList && approvedList?.data?.items && (
               <>
                 <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5 divide-y divide-solid">
-                  {approvedList.data?.items?.map((entry: Entry) => (
-                    <ScrollableListElement entry={entry} key={entry.uid} />
-                  ))}
+                  {approvedList.data?.items
+                    ?.sort((a: Entry, b: Entry) => {
+                      const dateA = new Date(a.timestamp);
+                      const dateB = new Date(b.timestamp);
+
+                      if (oldest) return dateA.getTime() - dateB.getTime();
+                      else return dateB.getTime() - dateA.getTime();
+                    })
+                    .map((entry: Entry) => (
+                      <ScrollableListElement entry={entry} key={entry.uid} />
+                    ))}
                 </div>
               </>
             )}

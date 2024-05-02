@@ -91,19 +91,44 @@ export const useApprovedList: () => UseQueryResult<
   });
 };
 
-export const useExport = () => {
+export const useExport = (mockLoadingFn?: (bool: boolean) => void) => {
   return useMutation(["useExport"], async () => {
+    if (mockLoadingFn) {
+      mockLoadingFn(true);
+    }
+
     axiosInstance
       .post("export")
-      .then((res) => {
-        if (res.data.url) {
-          const a = document.createElement("a");
-          a.href = res.data.url;
+      .then(async (res) => {
+        let fetchRes: Response;
+
+        do {
+          const abort = new AbortController();
+          const req = await fetch(res.data.getUrl, {
+            signal: abort.signal,
+          });
+          fetchRes = req;
+
+          abort.abort();
+
+          // window.open(fetchRes)
+        } while (fetchRes.status !== 200);
+
+        const a = document.createElement("a");
+
+        if (fetchRes.url) {
+          a.href = fetchRes.url;
+          a.rel = "noreferrer noopener";
+          a.target = "_blank";
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
         }
+        if (fetchRes.status === 200 && mockLoadingFn) {
+          mockLoadingFn(false);
+        }
       })
+
       .catch((err) => {
         throw err;
       });

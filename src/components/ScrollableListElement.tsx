@@ -7,6 +7,10 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  const { entryID } = useParams();
+
+  const currentEntryIsSelected = entryID === entry.uid;
+
   useEffect(() => {
     if (entry.approving || !entry.approving) {
       setTimeout(() => {
@@ -14,7 +18,7 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
           previousEntries
             ? {
                 ...previousEntries,
-                data: previousEntries.data.map((ent: any) =>
+                data: previousEntries.data.map((ent) =>
                   ent.uid === entry.uid ? { ...ent, approving: undefined } : ent
                 ),
               }
@@ -35,17 +39,25 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
   }, [entry]);
 
   return (
-    <div
-      className="relative flex hover:bg-slate-950 
-    hover:dark:bg-slate-50
-      hover:dark:bg-opacity-10
-      hover:bg-opacity-10 
+    <button
+      disabled={currentEntryIsSelected}
+      className={`
+    w-full
+    relative flex enabled:hover:bg-slate-950 
+  
+disabled:bg-neutral-400  
+dark:disabled:bg-neutral-500
+
+    text-left
+      enabled:hover:dark:bg-slate-50
+      enabled:hover:dark:bg-opacity-10
+      enabled:hover:bg-opacity-10 
       transition    
-      active:bg-opacity-20
-      active:dark:bg-opacity-20
+      enabled:active:bg-opacity-20
+      enabled:active:dark:bg-opacity-20
 
       overflow-clip
-      "
+      `}
     >
       {/* <div className="absolute  w-full h-full flex justify-center items-center bg-green-500 z-50 bg-opacity-25 backdrop-blur-sm text-xl select-none">
         Approvata ✔
@@ -62,7 +74,7 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
       )}
 
       <div
-        className="
+        className={`
 
         select-none 
         cursor-pointer 
@@ -78,9 +90,12 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
       overflow-hidden
       text-xs
         sm:text-lg
-        "
+        
+      `}
         onClick={() => {
-          navigate(entry.uid);
+          if (!currentEntryIsSelected) {
+            navigate(entry.uid);
+          }
         }}
       >
         <span className="truncate">
@@ -98,23 +113,31 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
           {entry.description}
         </span>
       </div>
+
       <div
         className="
-shrink-0
-      text-sm
-      select-none
-      flex
-      items-center
-      justify-center
-      h-100
-      w-11
-      opacity-40
-"
+        
+        
+        
+        
+        
+self-center
+
+        shrink-0
+        text-sm
+        select-none
+        flex
+        items-center
+        justify-center
+        h-100
+        w-11
+        opacity-40
+        "
       >
         {dateCalc(timeStamp)}
         {/* {entry.timestamp} */}
       </div>
-    </div>
+    </button>
   );
 }
 

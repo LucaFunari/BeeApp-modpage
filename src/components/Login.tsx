@@ -57,7 +57,6 @@ function Login() {
             "
           onClick={() => {
             if (key) {
-              console.log(key);
               // sessionStorage.set("ApiKey", key);
               sessionStorage.setItem("ApiKey", key);
               // Cookies.set("ApiKey", key, { expires: 1 });
