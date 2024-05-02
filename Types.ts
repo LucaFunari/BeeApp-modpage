@@ -1,4 +1,5 @@
 export type Entry = {
+  approvato?: boolean;
   uid: string;
   timestamp: string;
 

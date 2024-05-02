@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Entry } from "../../Types";
-import { UseEntryConfirm, useObservationsList } from "../api/Queries";
+import {
+  UseEntryConfirm,
+  useApprovedList,
+  useObservationsList,
+} from "../api/Queries";
 import DetailsLoading from "./GuiElements/DetailsLoading";
 import { useQueryClient } from "@tanstack/react-query";
 import DetailsImage from "./DetailsImage";
@@ -15,22 +19,31 @@ function Details() {
     return;
   });
 
-  const [currentEntry, setCurrentEntry] = useState<Entry>();
+  const { data: approvedList, isLoading: isLoadingApprovedList } =
+    useApprovedList();
+
+  const mergedList: Entry[] | undefined = React.useMemo(() => {
+    if (entriesList?.data && approvedList?.data?.items) {
+      return [...entriesList.data, ...approvedList.data.items];
+    } else if (entriesList?.data) {
+      return [...entriesList.data];
+    }
+  }, [entriesList, approvedList]);
+
+  const [currentEntry, setCurrentEntry] = React.useState<Entry>();
   const { mutateAsync } = UseEntryConfirm();
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (entriesList && entriesList.data) {
-      setCurrentEntry(
-        entriesList.data.find((one: Entry) => one.uid === entryID)
-      );
+  React.useEffect(() => {
+    if (mergedList) {
+      setCurrentEntry(mergedList.find((one: Entry) => one.uid === entryID));
     }
-  }, [entriesList, setCurrentEntry, entryID]);
+  }, [setCurrentEntry, entryID, mergedList]);
 
   return (
     <div className="relative flex flex-col gap-5 items-center justify-center w-full">
-      {isLoading && <DetailsLoading />}
+      {isLoading || (isLoadingApprovedList && <DetailsLoading />)}
       {currentEntry && (
         <>
           <div className="font-semibold">
@@ -73,50 +86,17 @@ function Details() {
             readOnly
             value={currentEntry.description}
           ></textarea>
-
-          <fieldset className="flex gap-20 p-3 relative">
-            <button
-              onClick={() => {
-                mutateAsync(
-                  { confirm: true, entryID: currentEntry.uid },
-                  {
-                    onSuccess: () => navigate("../"),
-                  }
-                );
-
-                queryClient.setQueriesData(["useEntries"], (previousEntries) =>
-                  previousEntries
-                    ? {
-                        ...previousEntries,
-                        data: previousEntries.data.map((ent: any) =>
-                          ent.uid === currentEntry.uid
-                            ? { ...ent, approving: true }
-                            : ent
-                        ),
-                      }
-                    : undefined
-                );
-              }}
-              className="
-            transition-all text-white-500  font-semibold  py-2 px-4
-            border border-slate-950 rounded dark:border-slate-50
-        
-          hover:border-green-500 hover:bg-green-500 hover:text-white 
-
-          active:bg-green-400 active:dark:bg-green-300 "
-            >
-              Approva
-            </button>
-
-            <button
-              onClick={
-                () => {
+          {!currentEntry.approvato && (
+            <fieldset className="flex gap-20 p-3 relative">
+              <button
+                onClick={() => {
                   mutateAsync(
-                    { confirm: false, entryID: currentEntry.uid },
+                    { confirm: true, entryID: currentEntry.uid },
                     {
                       onSuccess: () => navigate("../"),
                     }
                   );
+                  // @ts-expect-error aaa
 
                   queryClient.setQueriesData(
                     ["useEntries"],
@@ -124,32 +104,70 @@ function Details() {
                       previousEntries
                         ? {
                             ...previousEntries,
-                            data: previousEntries.data.map((ent: any) =>
+                            // @ts-expect-error aaa
+                            data: previousEntries.data.map((ent) =>
                               ent.uid === currentEntry.uid
-                                ? { ...ent, approving: false }
+                                ? { ...ent, approving: true }
                                 : ent
                             ),
                           }
                         : undefined
                   );
-                }
+                }}
+                className="
+            transition-all text-white-500  font-semibold  py-2 px-4
+            border border-slate-950 rounded dark:border-slate-50
+        
+          hover:border-green-500 hover:bg-green-500 hover:text-white 
 
-                // mutateAsync({
-                //   entryID: currentEntry.uid,
-                //   confirm: false,
-                // })
-              }
-              className="
+          active:bg-green-400 active:dark:bg-green-300 "
+              >
+                Approva
+              </button>
+
+              <button
+                onClick={
+                  () => {
+                    mutateAsync(
+                      { confirm: false, entryID: currentEntry.uid },
+                      {
+                        onSuccess: () => navigate("../"),
+                      }
+                    );
+
+                    queryClient.setQueriesData(
+                      ["useEntries"],
+                      // @ts-expect-error aaa
+                      (previousEntries) =>
+                        previousEntries
+                          ? {
+                              ...previousEntries,
+                              // @ts-expect-error aaa
+                              data: previousEntries.data.map((ent) =>
+                                ent.uid === currentEntry.uid
+                                  ? { ...ent, approving: false }
+                                  : ent
+                              ),
+                            }
+                          : undefined
+                    );
+                  }
+
+                  // mutateAsync({
+                  //   entryID: currentEntry.uid,
+                  //   confirm: false,
+                  // })
+                }
+                className="
             transition-all text-white-500  font-semibold  py-2 
             px-4 border border-slate-950 dark:border-white
-
           hover:border-red-500 hover:bg-red-500 hover:text-white rounded
-
             active:bg-red-400 active:dark:bg-red-300 "
-            >
-              Rifiuta
-            </button>
-          </fieldset>
+              >
+                Rifiuta
+              </button>
+            </fieldset>
+          )}
         </>
       )}
     </div>

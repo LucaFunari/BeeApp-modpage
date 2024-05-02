@@ -1,5 +1,6 @@
-import axios from "axios";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { UseQueryResult, useMutation, useQuery } from "@tanstack/react-query";
+import { Entry } from "../../Types";
 
 const BASE_URL = "https://lrjcxi6wf3.execute-api.eu-west-1.amazonaws.com/dev/";
 // qxrgcclbr1
@@ -77,4 +78,34 @@ export const DownloadImage = (path: string) => {
       enabled: !!path,
     }
   );
+};
+
+export const useApprovedList: () => UseQueryResult<
+  { data: { items: Entry[]; status: number } },
+  AxiosError
+> = () => {
+  return useQuery(["useApproved"], async () => {
+    const resp = await axiosInstance.get("list/approved");
+
+    return resp;
+  });
+};
+
+export const useExport = () => {
+  return useMutation(["useExport"], async () => {
+    axiosInstance
+      .post("export")
+      .then((res) => {
+        if (res.data.url) {
+          const a = document.createElement("a");
+          a.href = res.data.url;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  });
 };

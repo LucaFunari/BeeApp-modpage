@@ -43,7 +43,9 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
       transition    
       active:bg-opacity-20
       active:dark:bg-opacity-20
-    "
+
+      overflow-clip
+      "
     >
       {/* <div className="absolute  w-full h-full flex justify-center items-center bg-green-500 z-50 bg-opacity-25 backdrop-blur-sm text-xl select-none">
         Approvata ✔
@@ -60,7 +62,8 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
       )}
 
       <div
-        className="max-w-10  
+        className="
+
         select-none 
         cursor-pointer 
         h-20
@@ -69,34 +72,42 @@ function ScrollableListElement({ entry }: { entry: Entry }) {
         justify-center
         px-5
         relative
-      
-        text-xs
+      grow
+
+
+      overflow-hidden
+      text-xs
         sm:text-lg
-        flex-1    
         "
-        onClick={() => navigate(entry.uid)}
+        onClick={() => {
+          navigate(entry.uid);
+        }}
       >
-        <span className="truncate">Osservazione</span>
+        <span className="truncate">
+          Osservazione {entry.approvato && "Approvata"}
+        </span>
         <span
-          className="line-clamp-2
+          className="
+          truncate
           text-sm
           opacity-70
           z-30
-          truncate
-         "
+overflow-clip
+          "
         >
           {entry.description}
         </span>
       </div>
       <div
         className="
+shrink-0
       text-sm
       select-none
       flex
       items-center
       justify-center
       h-100
-      w-14
+      w-11
       opacity-40
 "
       >

@@ -1,19 +1,33 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollableListElement from "./ScrollableListElement";
-import { useObservationsList } from "../api/Queries";
+import { useApprovedList, useObservationsList } from "../api/Queries";
 import { Entry } from "../../Types";
 import ListLoading from "./ListLoading";
 
-function ScrollableList() {
+function ScrollableList(props: { showingApproved: boolean }) {
   const navigate = useNavigate();
+
+  const { showingApproved } = props;
 
   const errorFN = () => {
     navigate("../login");
   };
   const { data: entriesList, isLoading } = useObservationsList(errorFN);
+  const { data: approvedList, isLoading: approvedListIsLoading } =
+    useApprovedList();
+
+  React.useEffect(() => {
+    console.debug(showingApproved);
+
+    if (!showingApproved) {
+      console.debug(entriesList?.data[0]);
+    } else console.debug(approvedList?.data?.items[0]);
+  }, [showingApproved, entriesList, approvedList]);
 
   // const [oldest, setOldest] = React.useState<boolean>(false);
+
+  const loadingEntries = isLoading || approvedListIsLoading;
 
   return (
     <div className="flex flex-col w-60 lg:w-96 border border-solid border-slate-950 border-opacity-60 dark:border-slate-50 dark:border-opacity-40">
@@ -25,15 +39,31 @@ function ScrollableList() {
         Sort by: <b>{oldest ? "Oldest ↓" : "Newest ↑"}</b>
       </div> */}
       <div className="block max-h-full overflow-y-auto  relative">
-        {isLoading && <ListLoading />}
+        {loadingEntries && <ListLoading />}
 
-        {entriesList && entriesList.data && (
+        {!showingApproved ? (
           <>
-            <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5 divide-y divide-solid">
-              {entriesList.data.map((entry: Entry) => (
-                <ScrollableListElement entry={entry} key={entry.uid} />
-              ))}
-            </div>
+            {entriesList && entriesList.data && (
+              <>
+                <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5 divide-y divide-solid">
+                  {entriesList.data.map((entry: Entry) => (
+                    <ScrollableListElement entry={entry} key={entry.uid} />
+                  ))}
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {approvedList && approvedList?.data?.items && (
+              <>
+                <div className="bg-slate-950 bg-opacity-5 dark:bg-slate-50 dark:bg-opacity-5 divide-y divide-solid">
+                  {approvedList.data?.items?.map((entry: Entry) => (
+                    <ScrollableListElement entry={entry} key={entry.uid} />
+                  ))}
+                </div>
+              </>
+            )}
           </>
         )}
         {entriesList?.status === 204 && (
